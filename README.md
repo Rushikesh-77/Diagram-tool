@@ -12,6 +12,7 @@ This application is a web-based tool for creating, visualizing, and managing dia
    - [Connecting Components](#connecting-components)
    - [Deleting Components](#deleting-components)
    - [Viewing Components](#viewing-components)
+   - [Database Setup](#database-setup)
 4. [Available Scripts](#available-scripts)
 5. [Dependencies](#dependencies)
 6. [Development](#development)
@@ -25,6 +26,7 @@ This application is a web-based tool for creating, visualizing, and managing dia
 - **Component Connections**: Components can be connected with edges, representing relationships or data flow.
 - **MiniMap & Controls**: A MiniMap for navigation and control options like zoom and fit view.
 - **Properties Management**: Each component has properties such as Confidentiality, Integrity, and more, which can be selected during creation.
+- **Storage**: Store the node and edges of the diagram.
 - **Responsive Design**: The interface is responsive and adjusts to different screen sizes.
 
 ## Installation
@@ -34,7 +36,7 @@ To set up the application locally, follow these steps:
 1. **Clone the Repository**:
 
    ```bash
-   git clone https://github.com/yourusername/diagram-tool.git
+   git clone https://github.com/Rushikesh-77/diagram-tool.git
    ```
 
 2. **Navigate to the Project Directory**:
@@ -83,6 +85,9 @@ This will open the application in your default browser, typically at `http://loc
 
 - **MiniMap**: The MiniMap in the diagram view allows for easy navigation and overview of the entire diagram.
 - **Properties Table**: Below the diagram, a table lists all components and their associated properties for quick reference.
+
+### Database Setup
+- **Storage**: A db.json file has been set up in the project directory. This file is used to store the node and edges of the diagram. The initial structure of the db.json file is as follows:
 
 ## Available Scripts
 
