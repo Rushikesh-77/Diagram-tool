@@ -1,11 +1,12 @@
 import React from 'react';
-import DiagramTool from  './DiagramTool';
+import { ReactFlowProvider } from 'react-flow-renderer';
+import DiagramTool from './DiagramTool';
 
 function App() {
   return (
-    <div className="App">
+    <ReactFlowProvider>
       <DiagramTool />
-    </div>
+    </ReactFlowProvider>
   );
 }
 

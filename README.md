@@ -55,6 +55,16 @@ To set up the application locally, follow these steps:
 
 ## Usage
 
+### Start the JSON Server: 
+
+Before starting the application, you need to run the JSON server to serve the db.json file. Open a new terminal window and run the following command in the project directory:
+
+```bash
+npx json-server --watch db.json --port 5000
+```
+
+This will start the JSON server on port 5000. The application will interact with this server to read from and write to the db.json file.
+
 ### Starting the Application
 
 To start the application in development mode, use the following command:
