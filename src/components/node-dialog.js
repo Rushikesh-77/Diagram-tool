@@ -29,7 +29,7 @@ const DialogBox = ({ open, onClose, name, setName, properties, setProperties, sh
             />
           )}
         />
-        <p style={{margin: '7px', fontSize: '12px', opacity: '0.7'}}>Press enter after filling {isComponent ? 'Component' : 'Node'} Name</p>
+        <p style={{margin: '7px', fontSize: '12px', opacity: '0.7'}}>Please press enter after filling {isComponent ? 'Component' : 'Node'} Name in the textbox, else you'll not be able to add.</p>
         <Select
           multiple
           value={properties}
