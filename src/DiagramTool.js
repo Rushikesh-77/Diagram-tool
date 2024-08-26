@@ -44,7 +44,7 @@ const DiagramTool = () => {
     setProperties([]);
     setCanvasNodes([]);
     setEdges([]);
-    setOpen(true);
+    // setOpen(true);
   };
 
   const handleCreateNode = () => {
@@ -170,6 +170,8 @@ const DiagramTool = () => {
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
+          circuitLibrary={library}
+          setCircuitLibrary={setLibrary}
           nodeTypes={{
             rectangleNode: RectangleNode,
             circleNode: CircleNode,

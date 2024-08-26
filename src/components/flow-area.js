@@ -1,26 +1,55 @@
 import React, { useState, useRef } from 'react';
 import ReactFlow, { MiniMap, Controls, Background } from 'react-flow-renderer';
-import { Box, Button, AppBar, Toolbar } from '@mui/material';
+import { Box, Button, AppBar, Toolbar, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { toPng } from 'html-to-image';
 
-const FlowArea = ({ nodes, edges, onNodesChange, onEdgesChange, onConnect, nodeTypes }) => {
-  const [setCurrentNode] = useState(null);
+const FlowArea = ({ nodes, edges, onNodesChange, onEdgesChange, onConnect, nodeTypes, circuitLibrary, setCircuitLibrary }) => {
+  const [currentNode, setCurrentNode] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [labelName, setLabelName] = useState('');
   const reactFlowWrapper = useRef(null);
+  const [open, setOpen] = useState(false);
+  const [label, setLabel] = useState('');
 
   const handleNodeClick = (event, node) => {
     setCurrentNode(node.data.label || 'Unnamed Node');
   };
 
   const handleSave = () => {
-    const flowData = JSON.stringify({ nodes, edges }, null, 2);
-    const blob = new Blob([flowData], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
+    setOpenDialog(true);
+  };
 
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'flow-data.json';
-    a.click();
-    URL.revokeObjectURL(url);
+  const handleSaveDialogClose = () => {
+    setOpenDialog(false);
+  };
+
+  const handleLabelChange = (event) => {
+    setLabelName(event.target.value);
+  };
+
+  const handleSaveSubmit = () => {
+    const newCircuit = {
+      id: `${circuitLibrary.length + 1}`,
+      type: 'customNode',
+      data: { label: labelName, properties: [], color: 'blue' },
+      position: { x: 0, y: 0 },
+      defaultNodes: nodes.map(node => ({ ...node })),
+      defaultEdges: edges.map(edge => ({ ...edge })),
+    };
+
+    setCircuitLibrary([...circuitLibrary, newCircuit]);
+    handleSaveDialogClose();
+
+    const newNode = {
+      id: `${nodes.length + 1}`,
+      data: { label },
+      position: { x: 250, y: 250 },
+      type: 'default',
+    };
+    const updatedNodes = [...nodes, newNode];
+    const newEdges = [...edges];
+
+    setOpen(false);
   };
 
   const handleDownloadImage = () => {
@@ -44,7 +73,7 @@ const FlowArea = ({ nodes, edges, onNodesChange, onEdgesChange, onConnect, nodeT
     <Box flexGrow={1} bgcolor="grey.100" position="relative">
       <AppBar position="static" color="default">
         <Toolbar sx={{ justifyContent: 'space-between' }}>
-          <Button onClick={handleSave} color="primary"sx={{
+          <Button onClick={handleSave} color="primary" sx={{
               '&:hover': {
                 backgroundColor: 'primary.dark',
                 color: 'white',
@@ -79,6 +108,28 @@ const FlowArea = ({ nodes, edges, onNodesChange, onEdgesChange, onConnect, nodeT
           <Background />
         </ReactFlow>
       </div>
+
+      <Dialog open={openDialog} onClose={handleSaveDialogClose}>
+        <DialogTitle>Save Circuit</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Circuit Label"
+            fullWidth
+            value={labelName}
+            onChange={handleLabelChange}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleSaveDialogClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleSaveSubmit} color="primary">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };
